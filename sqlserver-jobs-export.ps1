@@ -1,9 +1,10 @@
 param(
-    [Parameter(Mandatory)][string]$servers
+    [Parameter(Mandatory)][string]$servers,
+    [Parameter(Mandatory)][string]$basepath
 )
-Import-Module dbatools
 Set-DbatoolsInsecureConnection -SessionOnly
-$basepath = "C:\Git\Repos\BMS-sqlserver-jobs"
+Import-Module dbatools
+ = "C:\Git\Repos\BMS-sqlserver-jobs"
 foreach ($server in $servers.Split(',')) {
     $jobs = (Get-DbaAgentJob -SqlInstance $server | Select-Object Name).Name
     foreach ($job in $jobs) {
