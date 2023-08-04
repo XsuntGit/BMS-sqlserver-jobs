@@ -4,7 +4,6 @@ param(
 )
 Set-DbatoolsInsecureConnection -SessionOnly
 Import-Module dbatools
- = "C:\Git\Repos\BMS-sqlserver-jobs"
 foreach ($server in $servers.Split(',')) {
     $jobs = (Get-DbaAgentJob -SqlInstance $server | Select-Object Name).Name
     foreach ($job in $jobs) {
