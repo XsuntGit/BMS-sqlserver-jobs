@@ -11,6 +11,6 @@ foreach ($server in $servers.Split(',')) {
             New-Item -Path ($basepath + "\" + $server) -ItemType Directory
         }
         $path = $basepath + "\" + $server + "\" + ($job -replace '[^a-zA-Z0-9]',' ') + ".sql"
-        Get-DbaAgentJob -SqlInstance $server -Job $job | Export-DbaScript -FilePath $path
+        Get-DbaAgentJob -SqlInstance $server -Job $job | Export-DbaScript -FilePath $path -NoPrefix
     }
 }
