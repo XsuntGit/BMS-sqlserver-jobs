@@ -41,8 +41,8 @@ print @dbname
 
 set @str1 = cast(FORMAT(GETDATE() , ''yyyyMMdd_HHmmss'') as varchar)
 
-	--set @Sql = ''SQLCMD -S ONELOOK-DB-2 -d ''+@dbname+'' -i "W:\Work\Scripts\HEME3.0\CAR_T_SiteUpdate\Copy_CAR_T_SiteUpdate_Staging.sql" -o "W:\Work\Scripts\HEME3.0\CAR_T_SiteUpdate\Logs\Copy_CAR_T_SiteUpdate_Staging_''+@dbname+''_test_''+@str1+''.txt"''
-	--EXEC master.sys.xp_cmdshell @Sql
+	set @Sql = ''SQLCMD -S ONELOOK-DB-2 -d ''+@dbname+'' -i "W:\Work\Scripts\HEME3.0\CAR_T_SiteUpdate\Copy_CAR_T_SiteUpdate_Staging.sql" -o "W:\Work\Scripts\HEME3.0\CAR_T_SiteUpdate\Logs\Copy_CAR_T_SiteUpdate_Staging_''+@dbname+''_test_''+@str1+''.txt"''
+	EXEC master.sys.xp_cmdshell @Sql
 
 Select @dbname=DBName from BMSHEME_Config..tblDBConfig WHERE DBType=''WeeklyDB''
 print @dbname
