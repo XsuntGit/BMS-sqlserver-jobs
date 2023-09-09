@@ -10,7 +10,7 @@ END
 
 DECLARE @jobId BINARY(16)
 EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'1APS_IVA_DATA Processing', 
-		@enabled=0, 
+		@enabled=1, 
 		@notify_level_eventlog=0, 
 		@notify_level_email=2, 
 		@notify_level_netsend=0, 
@@ -47,7 +47,7 @@ EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'every sat
 		@freq_recurrence_factor=1, 
 		@active_start_date=20221102, 
 		@active_end_date=99991231, 
-		@active_start_time=120100, 
+		@active_start_time=130100, 
 		@active_end_time=235959, 
 		@schedule_uid=N'7c06ad94-4edf-4cf2-ad66-2707344a998b'
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback

@@ -9,7 +9,7 @@ IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 END
 
 DECLARE @jobId BINARY(16)
-EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'1APS_CNC_Call_Load', 
+EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'1APS_Integrated Demand Load', 
 		@enabled=1, 
 		@notify_level_eventlog=0, 
 		@notify_level_email=2, 
@@ -21,7 +21,7 @@ EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'1APS_CNC_Call_Load',
 		@owner_login_name=N'XSUNT\prateek.singh', 
 		@notify_email_operator_name=N'Job Failure Notification', @job_id = @jobId OUTPUT
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Load Cnc Call step', 
+EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'load the data', 
 		@step_id=1, 
 		@cmdexec_success_code=0, 
 		@on_success_action=1, 
@@ -31,25 +31,25 @@ EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Load Cnc
 		@retry_attempts=0, 
 		@retry_interval=0, 
 		@os_run_priority=0, @subsystem=N'TSQL', 
-		@command=N'exec [BMSRData_CSCAN]. [dbo].[sp_CNC_CALL]', 
-		@database_name=N'master', 
+		@command=N'exec [BMSRData_CSCAN].[dbo].[sp_HEME_Demand_CSCAN_BCP_2]', 
+		@database_name=N'BMSRData_CSCAN', 
 		@flags=0
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 EXEC @ReturnCode = msdb.dbo.sp_update_job @job_id = @jobId, @start_step_id = 1
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'reccuring load weekly cnc cll', 
+EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'load integrated demand schedule', 
 		@enabled=1, 
 		@freq_type=8, 
-		@freq_interval=1, 
+		@freq_interval=64, 
 		@freq_subday_type=1, 
 		@freq_subday_interval=0, 
 		@freq_relative_interval=0, 
 		@freq_recurrence_factor=1, 
-		@active_start_date=20221208, 
+		@active_start_date=20230908, 
 		@active_end_date=99991231, 
-		@active_start_time=160001, 
+		@active_start_time=173500, 
 		@active_end_time=235959, 
-		@schedule_uid=N'e22f4afb-eb22-42e6-8e02-07b9557d2f5c'
+		@schedule_uid=N'a3da5430-434d-449b-a055-0ab5639b8a0c'
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 EXEC @ReturnCode = msdb.dbo.sp_add_jobserver @job_id = @jobId, @server_name = N'(local)'
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
