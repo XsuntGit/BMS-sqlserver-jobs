@@ -211,7 +211,7 @@ set @sub = ''867 run in 3.0 Production   : ''+ @dt1
  ---- set @combinedfile=@filelog+'';''+@filelog2
 EXEC master.dbo.sys_sp_send_dbmail
     @profile_name = ''XSUNT ONELOOK-SQL NOTIFICATION'',
-	@recipients = ''prateek.singh@xsunt.com;nguillot@xsunt.com'',
+	@recipients = ''prateek.singh@xsunt.com;nguillot@xsunt.com;justin.frey@xsunt.com;shen.lin@xsunt.com'',
     ---@recipients = ''prateek.singh@xsunt.com;nguillot@xsunt.com;devin.cannon@xsunt.com;xiao.li@xsunt.com;rushil.patel@xsunt.com;zoe.zhuang@xsunt.com;lzubarev@xsunt.com'',
     -----@from_address = ''prateek.singh@xsunt.com'',
     @subject = @sub,
