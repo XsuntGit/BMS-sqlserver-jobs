@@ -49,15 +49,15 @@ IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'schedule,step onc 3.0 running', 
 		@enabled=1, 
 		@freq_type=8, 
-		@freq_interval=1, 
+		@freq_interval=3, 
 		@freq_subday_type=4, 
 		@freq_subday_interval=30, 
 		@freq_relative_interval=0, 
 		@freq_recurrence_factor=1, 
 		@active_start_date=20220401, 
 		@active_end_date=99991231, 
-		@active_start_time=10100, 
-		@active_end_time=225959, 
+		@active_start_time=100, 
+		@active_end_time=235959, 
 		@schedule_uid=N'69bfec73-07cc-4395-af63-38f6647edf47'
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 EXEC @ReturnCode = msdb.dbo.sp_add_jobserver @job_id = @jobId, @server_name = N'(local)'

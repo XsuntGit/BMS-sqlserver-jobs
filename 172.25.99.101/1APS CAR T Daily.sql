@@ -9,7 +9,7 @@ IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 END
 
 DECLARE @jobId BINARY(16)
-EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'VeevaTargetRatingWeekly', 
+EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'1APS_CAR-T Daily', 
 		@enabled=1, 
 		@notify_level_eventlog=0, 
 		@notify_level_email=0, 
@@ -20,7 +20,7 @@ EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'VeevaTargetRatingWeekly',
 		@category_name=N'[Uncategorized (Local)]', 
 		@owner_login_name=N'XSUNT\yancheng.zhou', @job_id = @jobId OUTPUT
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Refresh Veeva Target List Weekly Sunday', 
+EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Cart daily', 
 		@step_id=1, 
 		@cmdexec_success_code=0, 
 		@on_success_action=1, 
@@ -30,25 +30,39 @@ EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Refresh 
 		@retry_attempts=0, 
 		@retry_interval=0, 
 		@os_run_priority=0, @subsystem=N'TSQL', 
-		@command=N'EXEC	 [dbo].[sp_VeevaTargetRatingWeekly] ', 
+		@command=N'exec [dbo].[sp_HEME_Cart_Site_cnfg]', 
 		@database_name=N'BMSRData_CSCAN', 
 		@flags=0
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 EXEC @ReturnCode = msdb.dbo.sp_update_job @job_id = @jobId, @start_step_id = 1
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'VeevaTargetRatingWeekly', 
+EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'Cart daily', 
 		@enabled=1, 
 		@freq_type=8, 
-		@freq_interval=1, 
+		@freq_interval=38, 
 		@freq_subday_type=1, 
 		@freq_subday_interval=0, 
 		@freq_relative_interval=0, 
 		@freq_recurrence_factor=1, 
-		@active_start_date=20231021, 
+		@active_start_date=20231023, 
 		@active_end_date=99991231, 
-		@active_start_time=160000, 
+		@active_start_time=132000, 
 		@active_end_time=235959, 
-		@schedule_uid=N'25a5c53a-7ed9-4a24-bb7e-83909761992d'
+		@schedule_uid=N'979b4604-1d25-4acf-a04d-a8cc36b8aa0d'
+IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
+EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'Car-t Daily', 
+		@enabled=1, 
+		@freq_type=8, 
+		@freq_interval=24, 
+		@freq_subday_type=1, 
+		@freq_subday_interval=0, 
+		@freq_relative_interval=0, 
+		@freq_recurrence_factor=1, 
+		@active_start_date=20231023, 
+		@active_end_date=99991231, 
+		@active_start_time=174000, 
+		@active_end_time=235959, 
+		@schedule_uid=N'fee11403-f711-425d-8c0a-18003a92a8b5'
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 EXEC @ReturnCode = msdb.dbo.sp_add_jobserver @job_id = @jobId, @server_name = N'(local)'
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
