@@ -49,7 +49,7 @@ IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'schedule,step onc 3.0 running', 
 		@enabled=1, 
 		@freq_type=8, 
-		@freq_interval=4, 
+		@freq_interval=9, 
 		@freq_subday_type=4, 
 		@freq_subday_interval=30, 
 		@freq_relative_interval=0, 
