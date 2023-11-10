@@ -210,6 +210,13 @@ Select * into tblMDSClaimHCP_TrialistPrv
 from
 BMSHEME3.dbo.tblMDSClaimHCP
 
+
+if object_id(N''tblClaimDataHeme_Proc_historyPrv'',N''U'') is not null
+	drop table tblClaimDataHeme_Proc_historyPrv
+Select * into tblClaimDataHeme_Proc_historyPrv
+from
+BMSHEME3.dbo.tblClaimDataHeme_Proc_history
+
 --where [Target] = ''Y'' and SalesTgt = ''Y''
 
       
