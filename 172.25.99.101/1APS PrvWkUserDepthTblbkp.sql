@@ -217,6 +217,12 @@ Select * into tblClaimDataHeme_Proc_historyPrv
 from
 BMSHEME3.dbo.tblClaimDataHeme_Proc_history
 
+if object_id(N''tblClaimDataHeme_Proc_history_REBLOZYL_prv'',N''U'') is not null
+	drop table tblClaimDataHeme_Proc_history_REBLOZYL_prv
+Select * into tblClaimDataHeme_Proc_history_REBLOZYL_prv
+from
+BMSHEME3.dbo.tblClaimDataHeme_Proc_history_REBLOZYL 
+
 --where [Target] = ''Y'' and SalesTgt = ''Y''
 
       
