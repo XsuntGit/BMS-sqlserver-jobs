@@ -51,7 +51,7 @@ where dovs.volume_mount_point not like ''C%''
 order by drive 
 
 
-Select Drivename, Drive , FreeSpaceInGB, TotalSpaceInGB ,FreePCT from Tempdb..#Dbspacechkemails
+Select distinct Drivename, Drive , FreeSpaceInGB, TotalSpaceInGB ,FreePCT from Tempdb..#Dbspacechkemails
 
 -------- Top 5 Files from each Drive
 
@@ -141,7 +141,7 @@ SELECT
         ''<td'' + CASE WHEN FreePCTcolor =1 THEN '' style="color:green;">'' ELSE '' style="color:red;">'' END + FreePCT + ''</td>'' +
         ''</tr>''
 FROM
-  ( SELECT  *
+  ( SELECT  distinct *
   FROM Tempdb..#Dbspacechkemails ) t1 order by Drive
  
 SELECT @MAIL_BODY = @MAIL_BODY + ''</table>''
@@ -151,7 +151,7 @@ SELECT @MAIL_BODY = @MAIL_BODY + ''</table>''
  
   DECLARE @html nvarchar(MAX), @body1 Nvarchar(max) , @int int, @dt1 nvarchar(25),@sub nvarchar(100)
 
-EXEC Test_Prateek.[dbo].[spQueryToHtmlTable]  @html = @html OUTPUT,  @query = N''select Rk , DriveName , Drive, FreeSpaceinGB,TotalSpaceinGb,FreePCT
+EXEC Test_Prateek.[dbo].[spQueryToHtmlTable]  @html = @html OUTPUT,  @query = N''select distinct Rk , DriveName , Drive, FreeSpaceinGB,TotalSpaceinGb,FreePCT
 ,PhysicalFileLocation,PhysicalfilesizeinGB
 ,DBName
 from Tempdb..#Dbdetailschkemail'' ,@orderBy = N''ORDER BY 3,1'';
