@@ -52,6 +52,7 @@ select distinct Speaker_Topic_ID , SPEAKER_PRODUCT_NAME,
 case
        when SPEAKER_PRODUCT_NAME = ''NON-BRANDED ACTIVITY'' then ''UNBRAND'' 
        when SPEAKER_PRODUCT_NAME = ''OPDIVO HCC'' then ''HCC'' 
+	   WHEN SPEAKER_PRODUCT_NAME  =''AUGTYRO LUNG'' THEN  ''AUGTYRO''
        when SPEAKER_PRODUCT_NAME = ''SPRYCEL'' then ''SPR''
        when SPEAKER_PRODUCT_NAME = ''OPDIVO ADJ MEL'' then ''ADJ''
        when SPEAKER_PRODUCT_NAME = ''OPDIVO+YERVOY RCC'' then ''O+Y RCC''
@@ -95,6 +96,7 @@ case
        when SPEAKER_PRODUCT_NAME = ''NON-BRANDED ACTIVITY'' then ''UNBRAND'' 
        when SPEAKER_PRODUCT_NAME = ''OPDIVO HCC'' then ''HCC''
        when SPEAKER_PRODUCT_NAME = ''SPRYCEL'' then ''SPR''
+	   WHEN SPEAKER_PRODUCT_NAME  =''AUGTYRO LUNG'' THEN  ''ROS''
        when SPEAKER_PRODUCT_NAME = ''OPDIVO ADJ MEL'' then ''YER''
        when SPEAKER_PRODUCT_NAME = ''OPDIVO+YERVOY RCC'' then ''RCC''
        when SPEAKER_PRODUCT_NAME = ''OPDIVO + YERVOY MELANOMA'' then ''YER''
