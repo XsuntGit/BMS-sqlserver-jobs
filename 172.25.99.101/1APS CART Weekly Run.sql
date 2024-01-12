@@ -9,7 +9,7 @@ IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 END
 
 DECLARE @jobId BINARY(16)
-EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'1APS_HEME Execution Weekly Extract', 
+EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'1APS_CART_Weekly Run', 
 		@enabled=1, 
 		@notify_level_eventlog=0, 
 		@notify_level_email=2, 
@@ -21,7 +21,7 @@ EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'1APS_HEME Execution Weekly E
 		@owner_login_name=N'XSUNT\prateek.singh', 
 		@notify_email_operator_name=N'Job Failure Notification', @job_id = @jobId OUTPUT
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'run Heme Weekly Execution', 
+EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'WEEKLY CART RUN', 
 		@step_id=1, 
 		@cmdexec_success_code=0, 
 		@on_success_action=1, 
@@ -35,15 +35,14 @@ EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'run Heme
 Declare @str1 varchar(1000)
 set @str1 = cast(FORMAT(GETDATE() , ''yyyyMMdd_HHmmss'') as varchar)
 
-	set @Sql = ''SQLCMD -S ONELOOK-DB-1 -i "W:\work\scripts\BMS\OneLook\HEME3.0\AutomationWeeklyExtractScripts\Execution_TemplateWeekly\Execution_TemplateWeekly_Job.sql" -o "W:\work\scripts\BMS\OneLook\HEME3.0\AutomationWeeklyExtractScripts\Execution_TemplateWeekly\Logs\Execution_TemplateWeekly_Logs_''+@str1+''.txt"''
-	EXEC master.sys.xp_cmdshell @Sql
-', 
+	set @Sql = ''SQLCMD -S ONELOOK-DB-1 -i "W:\work\scripts\BMS\OneLookDataProcess\CART\WeeklyRun\WeeklyRun.sql" -o "W:\work\scripts\BMS\OneLookDataProcess\CART\WeeklyRun\Logs\DCVAPPL_WeeklyRun_''+@str1+''.txt"''
+	EXEC master.sys.xp_cmdshell @Sql', 
 		@database_name=N'master', 
 		@flags=0
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 EXEC @ReturnCode = msdb.dbo.sp_update_job @job_id = @jobId, @start_step_id = 1
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'schedule heme weelky extract', 
+EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'WEEKLY CART RUN ON sUNDAT', 
 		@enabled=1, 
 		@freq_type=8, 
 		@freq_interval=2, 
@@ -51,11 +50,11 @@ EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'schedule 
 		@freq_subday_interval=0, 
 		@freq_relative_interval=0, 
 		@freq_recurrence_factor=1, 
-		@active_start_date=20220426, 
+		@active_start_date=20240111, 
 		@active_end_date=99991231, 
-		@active_start_time=100000, 
+		@active_start_time=170000, 
 		@active_end_time=235959, 
-		@schedule_uid=N'20e5a834-384a-4014-91df-c175d9aa3ee9'
+		@schedule_uid=N'f26b5fee-76fd-485c-8613-a0c54c717d72'
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 EXEC @ReturnCode = msdb.dbo.sp_add_jobserver @job_id = @jobId, @server_name = N'(local)'
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
