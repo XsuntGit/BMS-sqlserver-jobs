@@ -39,7 +39,7 @@ IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'Cart daily', 
 		@enabled=1, 
 		@freq_type=8, 
-		@freq_interval=38, 
+		@freq_interval=62, 
 		@freq_subday_type=1, 
 		@freq_subday_interval=0, 
 		@freq_relative_interval=0, 
@@ -49,20 +49,6 @@ EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'Cart dail
 		@active_start_time=132000, 
 		@active_end_time=235959, 
 		@schedule_uid=N'979b4604-1d25-4acf-a04d-a8cc36b8aa0d'
-IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'Car-t Daily', 
-		@enabled=1, 
-		@freq_type=8, 
-		@freq_interval=24, 
-		@freq_subday_type=1, 
-		@freq_subday_interval=0, 
-		@freq_relative_interval=0, 
-		@freq_recurrence_factor=1, 
-		@active_start_date=20231023, 
-		@active_end_date=99991231, 
-		@active_start_time=174000, 
-		@active_end_time=235959, 
-		@schedule_uid=N'fee11403-f711-425d-8c0a-18003a92a8b5'
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 EXEC @ReturnCode = msdb.dbo.sp_add_jobserver @job_id = @jobId, @server_name = N'(local)'
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
