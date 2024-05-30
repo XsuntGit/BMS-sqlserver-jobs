@@ -43,17 +43,17 @@ set @str1 = cast(FORMAT(GETDATE() , ''yyyyMMdd_HHmmss'') as varchar)
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 EXEC @ReturnCode = msdb.dbo.sp_update_job @job_id = @jobId, @start_step_id = 1
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'RUN SV PR ON WEEKLY BASIS', 
+EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'RUN dcV PR ON WEEKLY BASIS', 
 		@enabled=1, 
 		@freq_type=8, 
-		@freq_interval=1, 
+		@freq_interval=4, 
 		@freq_subday_type=1, 
 		@freq_subday_interval=0, 
 		@freq_relative_interval=0, 
 		@freq_recurrence_factor=1, 
 		@active_start_date=20240524, 
 		@active_end_date=99991231, 
-		@active_start_time=170000, 
+		@active_start_time=220000, 
 		@active_end_time=235959, 
 		@schedule_uid=N'ea76098b-60c3-47e3-aabb-84854f53eaa2'
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
