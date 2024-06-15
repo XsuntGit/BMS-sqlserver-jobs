@@ -44,6 +44,26 @@ IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'run step 2', 
 		@step_id=2, 
 		@cmdexec_success_code=0, 
+		@on_success_action=3, 
+		@on_success_step_id=0, 
+		@on_fail_action=3, 
+		@on_fail_step_id=0, 
+		@retry_attempts=0, 
+		@retry_interval=0, 
+		@os_run_priority=0, @subsystem=N'TSQL', 
+		@command=N'Declare @sql varchar(8000)
+Declare @str1 varchar(1000)
+set @str1 = cast(FORMAT(GETDATE() , ''yyyyMMdd_HHmmss'') as varchar)
+
+	set @Sql = ''SQLCMD -S ONELOOK-DB-1 -i "W:\work\scripts\BMS\OneLook\ONC\BMS Oncology\AutomationWeeklyExtractScripts\HEME_Weekly_Call_to_Matt\HEME_Weekly_Call_to_Matt_Job_gyr.sql" -o "W:\work\scripts\BMS\OneLook\ONC\BMS Oncology\AutomationWeeklyExtractScripts\HEME_Weekly_Call_to_Matt\Logs\gyr_HEME_Weekly_Call_to_Matt_Logs_''+@str1+''.txt"''
+	EXEC master.sys.xp_cmdshell @Sql
+', 
+		@database_name=N'master', 
+		@flags=0
+IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
+EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'run step 3', 
+		@step_id=3, 
+		@cmdexec_success_code=0, 
 		@on_success_action=1, 
 		@on_success_step_id=0, 
 		@on_fail_action=2, 
@@ -55,7 +75,7 @@ EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'run step
 Declare @str1 varchar(1000)
 set @str1 = cast(FORMAT(GETDATE() , ''yyyyMMdd_HHmmss'') as varchar)
 
-	set @Sql = ''SQLCMD -S ONELOOK-DB-1 -i "W:\work\scripts\BMS\OneLook\ONC\BMS Oncology\AutomationWeeklyExtractScripts\HEME_Weekly_Call_to_Matt\HEME_Weekly_Call_to_Matt_Job_gyr.sql" -o "W:\work\scripts\BMS\OneLook\ONC\BMS Oncology\AutomationWeeklyExtractScripts\HEME_Weekly_Call_to_Matt\Logs\gyr_HEME_Weekly_Call_to_Matt_Logs_''+@str1+''.txt"''
+	set @Sql = ''SQLCMD -S ONELOOK-DB-1 -i "W:\work\scripts\BMS\OneLook\ONC\BMS Oncology\AutomationWeeklyExtractScripts\HEME_Weekly_Call_to_Matt\HEME_Weekly_Call_to_Matt_Job_gyr_HCP.sql" -o "W:\work\scripts\BMS\OneLook\ONC\BMS Oncology\AutomationWeeklyExtractScripts\HEME_Weekly_Call_to_Matt\Logs\HCP_gyr_HEME_Weekly_Call_to_Matt_Logs_''+@str1+''.txt"''
 	EXEC master.sys.xp_cmdshell @Sql
 ', 
 		@database_name=N'master', 
