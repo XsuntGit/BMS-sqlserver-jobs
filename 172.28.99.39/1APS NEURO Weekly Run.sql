@@ -46,7 +46,7 @@ IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'RUN WEEKLY SCHEDULE NEURO', 
 		@enabled=1, 
 		@freq_type=8, 
-		@freq_interval=32, 
+		@freq_interval=64, 
 		@freq_subday_type=1, 
 		@freq_subday_interval=0, 
 		@freq_relative_interval=0, 
