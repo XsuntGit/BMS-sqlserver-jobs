@@ -10,7 +10,7 @@ END
 
 DECLARE @jobId BINARY(16)
 EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'1APS_AllBUExtract_ONC', 
-		@enabled=1, 
+		@enabled=0, 
 		@notify_level_eventlog=0, 
 		@notify_level_email=2, 
 		@notify_level_netsend=0, 
@@ -54,7 +54,7 @@ EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'run onc e
 		@freq_recurrence_factor=1, 
 		@active_start_date=20240809, 
 		@active_end_date=99991231, 
-		@active_start_time=190000, 
+		@active_start_time=183300, 
 		@active_end_time=235959, 
 		@schedule_uid=N'8340870e-d43c-43a4-a71c-03b8ebfb96da'
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback

@@ -10,7 +10,7 @@ END
 
 DECLARE @jobId BINARY(16)
 EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'1APS_AllBUExtract_ZEPUC', 
-		@enabled=1, 
+		@enabled=0, 
 		@notify_level_eventlog=0, 
 		@notify_level_email=2, 
 		@notify_level_netsend=0, 
@@ -53,7 +53,7 @@ EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'chedule z
 		@freq_recurrence_factor=1, 
 		@active_start_date=20240809, 
 		@active_end_date=99991231, 
-		@active_start_time=190600, 
+		@active_start_time=183600, 
 		@active_end_time=235959, 
 		@schedule_uid=N'15cbcb95-a1bb-413f-a45e-f070ecf6010a'
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
