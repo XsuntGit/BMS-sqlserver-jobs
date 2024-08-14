@@ -10,7 +10,7 @@ END
 
 DECLARE @jobId BINARY(16)
 EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'1APS_AllBUExtract_ONC', 
-		@enabled=0, 
+		@enabled=1, 
 		@notify_level_eventlog=0, 
 		@notify_level_email=2, 
 		@notify_level_netsend=0, 
