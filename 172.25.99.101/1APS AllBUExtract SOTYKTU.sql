@@ -54,7 +54,7 @@ EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'scheule s
 		@freq_recurrence_factor=1, 
 		@active_start_date=20240809, 
 		@active_end_date=99991231, 
-		@active_start_time=183400, 
+		@active_start_time=160400, 
 		@active_end_time=235959, 
 		@schedule_uid=N'89b3dac8-a6e2-419f-ab31-2546e0305f0e'
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
