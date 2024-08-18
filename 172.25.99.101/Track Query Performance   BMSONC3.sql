@@ -9,19 +9,19 @@ IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 END
 
 DECLARE @jobId BINARY(16)
-EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'1APS_Oncology Weekly Run', 
+EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'Track Query Performance - BMSONC3', 
 		@enabled=1, 
 		@notify_level_eventlog=0, 
 		@notify_level_email=2, 
 		@notify_level_netsend=0, 
 		@notify_level_page=0, 
 		@delete_level=0, 
-		@description=N'No description available.', 
+		@description=N'Runs TrackQueryPerformance procedure periodically for BMSONC3', 
 		@category_name=N'[Uncategorized (Local)]', 
 		@owner_login_name=N'XSUNT\prateek.singh', 
 		@notify_email_operator_name=N'Job Failure Notification', @job_id = @jobId OUTPUT
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Weekly run script', 
+EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Run TrackQueryPerformance', 
 		@step_id=1, 
 		@cmdexec_success_code=0, 
 		@on_success_action=1, 
@@ -31,32 +31,25 @@ EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Weekly r
 		@retry_attempts=0, 
 		@retry_interval=0, 
 		@os_run_priority=0, @subsystem=N'TSQL', 
-		@command=N'
-Declare @sql varchar(8000)
-Declare @str1 varchar(1000)
-set @str1 = cast(FORMAT(GETDATE() , ''yyyyMMdd_HHmmss'') as varchar)
-
-	set @Sql = ''SQLCMD -S ONELOOK-DB-1 -i "W:\work\scripts\BMS\OneLook\ONC\BMS Oncology\ProductionScript\Automation\WeeklyRun\WeeklyRun.sql" -o "W:\work\scripts\BMS\OneLook\ONC\BMS Oncology\ProductionScript\Automation\WeeklyRun\Logs\WeeklyRun_''+@str1+''.txt"''
-	EXEC master.sys.xp_cmdshell @Sql
-', 
+		@command=N'EXEC dbo.TrackQueryPerformance @DatabaseName = ''BMSONC3''', 
 		@database_name=N'master', 
 		@flags=0
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 EXEC @ReturnCode = msdb.dbo.sp_update_job @job_id = @jobId, @start_step_id = 1
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'every sat', 
+EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'Daily at 1 AM', 
 		@enabled=1, 
-		@freq_type=8, 
-		@freq_interval=64, 
-		@freq_subday_type=1, 
-		@freq_subday_interval=0, 
+		@freq_type=4, 
+		@freq_interval=1, 
+		@freq_subday_type=8, 
+		@freq_subday_interval=6, 
 		@freq_relative_interval=0, 
-		@freq_recurrence_factor=1, 
-		@active_start_date=20210129, 
+		@freq_recurrence_factor=0, 
+		@active_start_date=20240817, 
 		@active_end_date=99991231, 
-		@active_start_time=140001, 
+		@active_start_time=10000, 
 		@active_end_time=235959, 
-		@schedule_uid=N'dbbab674-ca2c-4366-a406-05ef3e55130e'
+		@schedule_uid=N'ed555db0-4a9f-4b50-8b71-5f24ebdb2909'
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 EXEC @ReturnCode = msdb.dbo.sp_add_jobserver @job_id = @jobId, @server_name = N'(local)'
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
