@@ -66,7 +66,7 @@ EXEC [Master].Dbo.sys_sp_send_dbmail
     @body_format = ''HTML'',
     @query_no_truncate = 1,
 	@file_attachments =@logfile;
- ', 
+', 
 		@database_name=N'master', 
 		@flags=0
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
