@@ -10,7 +10,7 @@ END
 
 DECLARE @jobId BINARY(16)
 EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'Daily Call Activity - CSCAN', 
-		@enabled=0, 
+		@enabled=1, 
 		@notify_level_eventlog=0, 
 		@notify_level_email=0, 
 		@notify_level_netsend=0, 
@@ -62,7 +62,7 @@ EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'Daily Cal
 		@freq_recurrence_factor=1, 
 		@active_start_date=20180518, 
 		@active_end_date=99991231, 
-		@active_start_time=130000, 
+		@active_start_time=110000, 
 		@active_end_time=235959, 
 		@schedule_uid=N'66580eec-38a8-494d-9749-9cda3baceb24'
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
