@@ -169,7 +169,7 @@ from Tempdb..#Dbdetailschkemail'' ,@orderBy = N''ORDER BY 3,1'';
   set @body1 =  @body1
   EXEC msdb.dbo.sp_send_dbmail
     @profile_name = ''XSUNT ONELOOK-DB-1 SQL NOTIFICATION'',
-	@recipients = ''prateek.singh@xsunt.com;nguillot@xsunt.com;larisa.labas@xsunt.com;azubarev@xsunt.com;lsun@xsunt.com'',
+	@recipients = ''prateek.singh@xsunt.com;nguillot@xsunt.com;larisa.labas@xsunt.com;azubarev@xsunt.com'',
     --@recipients = ''prateek.singh@xsunt.com'' ,
     --@from_address = ''OnelookOncology@xsunt.com'',
     @subject = @sub,

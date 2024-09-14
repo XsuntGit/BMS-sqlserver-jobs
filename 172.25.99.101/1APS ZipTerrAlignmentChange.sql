@@ -74,7 +74,7 @@ Set  @date1 =  convert(varchar(30),  getdate() )
 set @sub1 =  ''Zip / Territory Added or Removed List  as of :'' +@date1
 EXEC master.dbo.sys_sp_send_dbmail
     @profile_name = ''XSUNT ONELOOK-DB-1 SQL Notification'',
-	@recipients = ''prateek.singh@xsunt.com;yancheng.zhou@xsunt.com;lsun@xsunt.com'',
+	@recipients = ''prateek.singh@xsunt.com;yancheng.zhou@xsunt.com'',
     ----@recipients = ''prateek.singh@xsunt.com;xiao.li@xsunt.com;nguillot@xsunt.com;rushil.patel@xsunt.com'',
    ----@from_address = ''prateek.singh@xsunt.com'',
     @subject = @sub1 ,

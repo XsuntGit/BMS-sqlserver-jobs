@@ -132,7 +132,7 @@ print @mail_body
   EXEC msdb.dbo.sp_send_dbmail
     @profile_name = ''xsunt onelook-sql notification'',
 	@recipients = ''alen.zhang@xsunt.com;gloria.gu@xsunt.com;tracy.wu@xsunt.com;elvira.liu@xsunt.com;victor.xu@xsunt.com;rushil.patel@xsunt.com;akorolev@xsunt.com;nathan.siviy@xsunt.com;tiffany.wang@xsunt.com;young.ko@xsunt.com;yancheng.zhou@xsunt.com;feng.lu@xsunt.com;hannah.zheng@xsunt.com;'',
-    @copy_recipients=''prateek.singh@xsunt.com;azubarev@xsunt.com;nguillot@xsunt.com;lsun@xsunt.com;'',--@recipients = '''' ,
+    @copy_recipients=''prateek.singh@xsunt.com;azubarev@xsunt.com;nguillot@xsunt.com;'',--@recipients = '''' ,
     @subject = @sub,
     @body = @body1 ,
     @body_format=''HTML''
