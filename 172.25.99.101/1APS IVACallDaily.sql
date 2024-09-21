@@ -10,7 +10,7 @@ END
 
 DECLARE @jobId BINARY(16)
 EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'1APS_IVACallDaily', 
-		@enabled=0, 
+		@enabled=1, 
 		@notify_level_eventlog=0, 
 		@notify_level_email=0, 
 		@notify_level_netsend=0, 
@@ -39,14 +39,14 @@ IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'IVACallDaily', 
 		@enabled=1, 
 		@freq_type=8, 
-		@freq_interval=112, 
+		@freq_interval=96, 
 		@freq_subday_type=1, 
 		@freq_subday_interval=0, 
 		@freq_relative_interval=0, 
 		@freq_recurrence_factor=1, 
 		@active_start_date=20240124, 
 		@active_end_date=99991231, 
-		@active_start_time=125600, 
+		@active_start_time=105600, 
 		@active_end_time=235959, 
 		@schedule_uid=N'aaf28891-88a0-4e7e-938d-2901450417fc'
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
