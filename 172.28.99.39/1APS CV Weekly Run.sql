@@ -46,14 +46,14 @@ IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'Step Weekly Run CV - on Friday', 
 		@enabled=1, 
 		@freq_type=8, 
-		@freq_interval=32, 
+		@freq_interval=64, 
 		@freq_subday_type=1, 
 		@freq_subday_interval=0, 
 		@freq_relative_interval=0, 
 		@freq_recurrence_factor=1, 
 		@active_start_date=20210727, 
 		@active_end_date=99991231, 
-		@active_start_time=210000, 
+		@active_start_time=90000, 
 		@active_end_time=235959, 
 		@schedule_uid=N'ef5352a4-17d7-492d-aaa5-f682100b059b'
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
