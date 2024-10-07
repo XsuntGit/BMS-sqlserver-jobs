@@ -27,8 +27,8 @@ EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Sys_Back
 		@on_success_step_id=0, 
 		@on_fail_action=2, 
 		@on_fail_step_id=0, 
-		@retry_attempts=0, 
-		@retry_interval=0, 
+		@retry_attempts=3, 
+		@retry_interval=5, 
 		@os_run_priority=0, @subsystem=N'TSQL', 
 		@command=N'exec [XsuntAdmin].[dbo].[sys_database_backup]
 @Databases = ''ALL_DATABASES'',
@@ -57,7 +57,7 @@ EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'Sys_Backu
 		@freq_recurrence_factor=1, 
 		@active_start_date=20180528, 
 		@active_end_date=99991231, 
-		@active_start_time=0, 
+		@active_start_time=1, 
 		@active_end_time=235959, 
 		@schedule_uid=N'66f3b676-b2be-4ce4-8f07-837bd618fb75'
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
