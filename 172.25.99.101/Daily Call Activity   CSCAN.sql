@@ -12,13 +12,14 @@ DECLARE @jobId BINARY(16)
 EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'Daily Call Activity - CSCAN', 
 		@enabled=1, 
 		@notify_level_eventlog=0, 
-		@notify_level_email=0, 
+		@notify_level_email=2, 
 		@notify_level_netsend=0, 
 		@notify_level_page=0, 
 		@delete_level=0, 
 		@description=N'No description available.', 
 		@category_name=N'[Uncategorized (Local)]', 
-		@owner_login_name=N'XSUNT\srv-task', @job_id = @jobId OUTPUT
+		@owner_login_name=N'XSUNT\srv-task', 
+		@notify_email_operator_name=N'Job Failure Notification', @job_id = @jobId OUTPUT
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Daily Call Activity', 
 		@step_id=1, 
@@ -55,16 +56,30 @@ IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'Daily Call Activity', 
 		@enabled=1, 
 		@freq_type=8, 
-		@freq_interval=96, 
+		@freq_interval=32, 
 		@freq_subday_type=1, 
 		@freq_subday_interval=0, 
 		@freq_relative_interval=0, 
 		@freq_recurrence_factor=1, 
 		@active_start_date=20180518, 
 		@active_end_date=99991231, 
-		@active_start_time=110000, 
+		@active_start_time=130000, 
 		@active_end_time=235959, 
 		@schedule_uid=N'66580eec-38a8-494d-9749-9cda3baceb24'
+IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
+EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'Every Sturday Run Call Activity Daily', 
+		@enabled=1, 
+		@freq_type=8, 
+		@freq_interval=64, 
+		@freq_subday_type=1, 
+		@freq_subday_interval=0, 
+		@freq_relative_interval=0, 
+		@freq_recurrence_factor=1, 
+		@active_start_date=20241010, 
+		@active_end_date=99991231, 
+		@active_start_time=110000, 
+		@active_end_time=235959, 
+		@schedule_uid=N'38ee9e04-14d2-4be7-a5fc-d52c37bb79c9'
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 EXEC @ReturnCode = msdb.dbo.sp_add_jobserver @job_id = @jobId, @server_name = N'(local)'
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
