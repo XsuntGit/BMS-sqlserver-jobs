@@ -162,7 +162,7 @@ IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'Runt to assign dbroles', 
 		@enabled=1, 
 		@freq_type=8, 
-		@freq_interval=60, 
+		@freq_interval=62, 
 		@freq_subday_type=8, 
 		@freq_subday_interval=4, 
 		@freq_relative_interval=0, 
