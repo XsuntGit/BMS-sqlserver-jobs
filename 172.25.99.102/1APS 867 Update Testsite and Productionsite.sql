@@ -188,6 +188,10 @@ print @filelog2
 
 	set @Sql = ''SQLCMD -S ONELOOK-SQL -i "H:\Work\Scripts\ONC\Production\Run_867_ONC30\Staging\TeamB_867\Run867_forTeamB_Processing.sql" -o "H:\Work\Scripts\ONC\Production\Run_867_ONC30\Staging\TeamB_867\Logs\Procesing_Update_Production_''+@str1+''.txt" ''
 	EXEC master.sys.xp_cmdshell @Sql
+ 	-----update HEME Team SUBQ   867 20230104
+
+	set @Sql = ''SQLCMD -S ONELOOK-SQL -i "H:\Work\Scripts\ONC\Production\Run_867_ONC30\Staging\TeamSUBQ_867\Run867_forTeamSUBQ_Processing.sql" -o "H:\Work\Scripts\ONC\Production\Run_867_ONC30\Staging\TeamSUBQ_867\Logs\Procesing_Update_Production_''+@str1+''.txt" ''
+	EXEC master.sys.xp_cmdshell @Sql
  
  ------
  update t1 set T1.stat_prod=''Y'' from bmsonc_867..tbl867_runONC30 t1
