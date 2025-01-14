@@ -24,9 +24,9 @@ IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'daily zep ms on pa 101 pat hub', 
 		@step_id=1, 
 		@cmdexec_success_code=0, 
-		@on_success_action=3, 
+		@on_success_action=1, 
 		@on_success_step_id=0, 
-		@on_fail_action=3, 
+		@on_fail_action=1, 
 		@on_fail_step_id=0, 
 		@retry_attempts=0, 
 		@retry_interval=0, 
@@ -38,31 +38,6 @@ Declare @str1 varchar(1000)
 set @str1 = cast(FORMAT(GETDATE() , ''yyyyMMdd_HHmmss'') as varchar)
 
 	set @Sql = ''SQLCMD -S ONELOOK-DB-1 -i "W:\work\scripts\BMS\OneLook\Zeposia\Patient Hub Report\Processing\ZeposiaMSPatHubReportProcessing.sql" -o "W:\work\scripts\BMS\OneLook\Zeposia\Patient Hub Report\Processing\Logs\ZeposiaMSPatHubReportProcessing_''+@str1+''.txt"''
-	EXEC master.sys.xp_cmdshell @Sql
-
-
-
-', 
-		@database_name=N'master', 
-		@flags=0
-IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'step1 zep uc pat hub processing pa 101', 
-		@step_id=2, 
-		@cmdexec_success_code=0, 
-		@on_success_action=1, 
-		@on_success_step_id=0, 
-		@on_fail_action=2, 
-		@on_fail_step_id=0, 
-		@retry_attempts=0, 
-		@retry_interval=0, 
-		@os_run_priority=0, @subsystem=N'TSQL', 
-		@command=N'
-
-Declare @sql varchar(8000)
-Declare @str1 varchar(1000)
-set @str1 = cast(FORMAT(GETDATE() , ''yyyyMMdd_HHmmss'') as varchar)
-
-	set @Sql = ''SQLCMD -S ONELOOK-DB-1 -i "W:\work\scripts\BMS\OneLook\ZeposiaUC\Patient Hub Report\Processing\ZeposiaUCPatHubReportProcessing.sql" -o "W:\work\scripts\BMS\OneLook\ZeposiaUC\Patient Hub Report\Processing\Logs\ZeposiaUCPatHubReportProcessing_''+@str1+''.txt"''
 	EXEC master.sys.xp_cmdshell @Sql
 
 
